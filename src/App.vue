@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <a-table bordered :columns="columns" :components="components" :dataSource="data">
+    <a-table bordered :columns="columns" :components="components" :dataSource="data" @change="handleTableChange">
         <template v-slot:action>
         <a href="javascript:;">Delete</a>
         </template>
@@ -18,17 +18,31 @@ const columns = [
   {
     title: "Date",
     dataIndex: "date",
-    width: 200
+    width: 200, sorter: true,
   },
   {
     title: "Amount",
     dataIndex: "amount",
-    width: 100
+    width: 100,
+      sorter: true,
   },
   {
     title: "Type",
     dataIndex: "type",
-    width: 100
+    width: 100,
+      filters: [
+          {
+              text: 'London',
+              value: 'London',
+          },
+          {
+              text: 'New York',
+              value: 'New York',
+          },
+      ],
+      filterMultiple: false,
+      onFilter: (value, record) => record.type.indexOf(value) === 0,
+      sortDirections: ['descend', 'ascend'],
   },
   {
     title: "Note",
@@ -125,13 +139,17 @@ export default {
       columns
     };
   },
-  methods: {}
+  methods: {
+      handleTableChange(){
+          alert('handleTableChange');
+      }
+  }
 };
 </script>
 <style>
 .resize-table-th {
   position: relative;
-  
+
 }
 .resize-table-th .table-draggable-handle {
     height: 100% !important;
