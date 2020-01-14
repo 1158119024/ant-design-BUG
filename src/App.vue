@@ -24,7 +24,7 @@ const columns = [
     title: "Amount",
     dataIndex: "amount",
     width: 100,
-      sorter: true,
+      sorter: (a, b) => a.amount - b.amount,
   },
   {
     title: "Type",
@@ -42,6 +42,7 @@ const columns = [
       ],
       filterMultiple: false,
       onFilter: (value, record) => record.type.indexOf(value) === 0,
+      sorter: (a, b) => a.type.length - b.type.length,
       sortDirections: ['descend', 'ascend'],
   },
   {
